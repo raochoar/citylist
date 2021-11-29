@@ -1,9 +1,9 @@
 import './App.css';
-import {Container} from 'react-bootstrap';
+import {Container, Navbar} from 'react-bootstrap';
 import {Stack} from 'react-bootstrap';
 import ListOfCities from "./components/ListOfCities";
 import CitySearchInput from "./components/CitySearchInput";
-import { useState} from "react";
+import {useState} from "react";
 
 function App() {
     const [citiesCollection, setCitiesCollection] = useState([]);
@@ -20,28 +20,24 @@ function App() {
         setControllerRef(controller);
 
         const pageSize = 25;
-        const offset= pageSize * pageValue;
+        const offset = pageSize * pageValue;
         const url = new URL('http://localhost:3030/cities');
-        const params = {offset, limit:pageSize, filter: filterValue || ''};
+        const params = {offset, limit: pageSize, filter: filterValue || ''};
         url.search = new URLSearchParams(params).toString();
         fetch(url.toString(), {signal: controller.signal})
             .then(result => {
                     if (result.status === 200) {
                         result.json().then(r => {
-                            if(r.data.length > 0) {
-                                setCitiesCollection(citiesCollection.concat(r.data));
-                                if(r.total > (offset + pageSize)) {
-                                    setPage(page + 1);
-                                } else {
-                                    setNoMoreDataFlag(true);
-                                }
+                            setCitiesCollection(citiesCollection.concat(r.data));
+                            if (r.total > (offset + pageSize)) {
+                                setPage(page + 1);
                             } else {
                                 setNoMoreDataFlag(true);
                             }
                         })
                     } else {
                         console.log(' error found');
-                        getMoreCities();
+                        getMoreCities(filterValue); //TODO: add a delay for the retry in order to avoid DOS attacks
                     }
                 },
                 e => {
@@ -50,20 +46,24 @@ function App() {
     }
 
     const getMoreCities = (filterValue) => {
-            fetchCityData(page, filterValue);
+        fetchCityData(page, filterValue);
     };
     const onFilterChange = (newFilter) => {
 
-            setFilter(newFilter);
-            setPage(0);
-            setCitiesCollection([]);
-            setNoMoreDataFlag(false);
+        setFilter(newFilter);
+        setPage(0);
+        setCitiesCollection([]);
+        setNoMoreDataFlag(false);
 
     }
     return (
         <Container>
+            <Navbar bg="light">
+                <Navbar.Brand   variant="dark">Welcome to the City travel wish list!</Navbar.Brand>
+            </Navbar>
             <Stack gap={3}>
-                <h1>Welcome to the City travel wish list!</h1>
+
+
                 <CitySearchInput onFilterChange={onFilterChange}></CitySearchInput>
                 <ListOfCities data={citiesCollection}
                               onGetMoreRows={getMoreCities}
