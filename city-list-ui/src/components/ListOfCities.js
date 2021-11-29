@@ -5,45 +5,26 @@ import CityItem from "./CityItem";
 import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {useInView} from 'react-intersection-observer';
 import CityItemPlaceholder from "./CityItemPlaceholder";
+import {useListOfCitiesPref} from "../hooks/useListOfCitiesPref";
 
+/**
+ * This component render a list of cities and manage the infinite scroll logic.
+ * Also provider the cities infomration logic to the city items.
+ * @param data
+ * @param onGetMoreRows
+ * @param filter
+ * @param noMoreDataFlag
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function ListOfCities({data = [], onGetMoreRows = f => f, filter = '', noMoreDataFlag = false}) {
     const [maxHeight, setMaxHeight] = useState(0);
     const [lastRowRef, lastRowInView] = useInView();
     const listGroup = useRef();
-    const [checkedItems, setCheckedItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    function fetchListOfCities(page, itemAcum = []) {
-        const url = new URL('http://localhost:3030/preferences/cities');
-        const pageSize = 25;
-        const params = {offset: pageSize * page, limit: pageSize};
-        url.search = new URLSearchParams(params).toString();
-        setIsLoading(true);
-        fetch(url.toString())
-            .then(result => {
-                    if (result.status === 200) {
-                        result.json().then(r => {
-                            const newItemAcum = itemAcum.concat(r.data);
-                            if (r.total > (params.offset + pageSize)) {
-                                fetchListOfCities(page + 1, newItemAcum);
-                            } else {
-                                setIsLoading(false);
-                                setCheckedItems(newItemAcum);
-                                console.log('total items:' + newItemAcum.length);
-                            }
-                        })
-                    } else {
-                        console.log('Server error found');
-                        fetchListOfCities(page); //re-try
-                    }
-                },
-                e => {
-                    console.log('Connection issue: ' + JSON.stringify(e));
-                });
-    }
+    const {fetchListOfCitiesPref, checkedItems, isLoading} = useListOfCitiesPref();
 
     useEffect(() => {
-        fetchListOfCities(0);
+        fetchListOfCitiesPref(0);
         // eslint-disable-next-line
     }, [filter]);
 

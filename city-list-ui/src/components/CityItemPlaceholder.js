@@ -1,5 +1,11 @@
 import {Form, ListGroup, Placeholder, Stack} from "react-bootstrap";
+import {memo} from "react";
 
+/**
+ * This is just a placeholder static component that renders
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function CityItemPlaceholder() {
     return <ListGroup.Item className="d-flex justify-content-between align-items-start">
         <Stack direction={"horizontal"} gap={2}>
@@ -18,4 +24,4 @@ function CityItemPlaceholder() {
     </ListGroup.Item>;
 }
 
-export default CityItemPlaceholder;
+export default memo(CityItemPlaceholder);

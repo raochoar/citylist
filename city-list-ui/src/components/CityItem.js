@@ -1,41 +1,31 @@
 import {Form, ListGroup, Spinner, Stack} from "react-bootstrap";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
+import {usePatchCityPref} from "../hooks/usePatchCityPref";
 
+/**
+ * This component renders and handle the logic of a city item.
+ * It calls a hook to patch the data preferences and recieve the
+ * checkedItems to handle that state.
+ * @param city
+ * @param checkedItems
+ * @param isCheckedItemLoading
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function CityItem({city, checkedItems = [], isCheckedItemLoading = false}) {
-    const [checkedValue, setCheckedValue] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+
+    const {patchItemData, checkedValue, isLoading, setIsLoading, setCheckedValue} = usePatchCityPref();
 
     useEffect(() => {
         setIsLoading(isCheckedItemLoading);
+        // eslint-disable-next-line
     }, [isCheckedItemLoading]);
 
     useEffect(() => {
         setCheckedValue(checkedItems.includes(city.geonameid));
+        // eslint-disable-next-line
     }, [checkedItems, city]);
 
-    function patchItemData(cityId, newCheckedValue) {
-        const body = {};
-        body[cityId] = newCheckedValue;
-        setIsLoading(true);
-        fetch('http://localhost:3030/preferences/cities', {
-            method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(body)
-        }).then(result => {
-                if (result.status === 204) {
-                    setCheckedValue(newCheckedValue);
-                    setIsLoading(false);
-                } else {
-                    console.log('Server error found');
-                    patchItemData(cityId, newCheckedValue); //re-try
-                }
-            },
-            e => {
-                console.log('Connection issue: ' + JSON.stringify(e));
-            });
-    }
 
     function cityClicked(cityId) {
         if (!isLoading) {

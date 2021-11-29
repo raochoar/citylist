@@ -3,68 +3,24 @@ import {Container, Navbar} from 'react-bootstrap';
 import {Stack} from 'react-bootstrap';
 import ListOfCities from "./components/ListOfCities";
 import CitySearchInput from "./components/CitySearchInput";
-import {useState} from "react";
+import {useListOfCities} from "./hooks/useListOfCities";
 
+/**
+ * This is the main app, contains the header, filter input and a list of cities.
+ * Also manage the status of the cities collection to be rendered.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function App() {
-    const [citiesCollection, setCitiesCollection] = useState([]);
-    const [page, setPage] = useState(0);
-    const [filter, setFilter] = useState('');
-    const [noMoreDataFlag, setNoMoreDataFlag] = useState(false);
-    const [controllerRef, setControllerRef] = useState();
+    const { citiesCollection, getMoreCities, filter, noMoreDataFlag, onFilterChangeHandler } = useListOfCities();
 
-    function fetchCityData(pageValue, filterValue) {
-        if (controllerRef) {
-            controllerRef.abort();
-        }
-        const controller = new AbortController();
-        setControllerRef(controller);
-
-        const pageSize = 25;
-        const offset = pageSize * pageValue;
-        const url = new URL('http://localhost:3030/cities');
-        const params = {offset, limit: pageSize, filter: filterValue || ''};
-        url.search = new URLSearchParams(params).toString();
-        fetch(url.toString(), {signal: controller.signal})
-            .then(result => {
-                    if (result.status === 200) {
-                        result.json().then(r => {
-                            setCitiesCollection(citiesCollection.concat(r.data));
-                            if (r.total > (offset + pageSize)) {
-                                setPage(page + 1);
-                            } else {
-                                setNoMoreDataFlag(true);
-                            }
-                        })
-                    } else {
-                        console.log(' error found');
-                        getMoreCities(filterValue); //TODO: add a delay for the retry in order to avoid DOS attacks
-                    }
-                },
-                e => {
-                    console.log('running error promise');
-                });
-    }
-
-    const getMoreCities = (filterValue) => {
-        fetchCityData(page, filterValue);
-    };
-    const onFilterChange = (newFilter) => {
-
-        setFilter(newFilter);
-        setPage(0);
-        setCitiesCollection([]);
-        setNoMoreDataFlag(false);
-
-    }
     return (
         <Container>
             <Navbar bg="light">
                 <Navbar.Brand   variant="dark">Welcome to the City travel wish list!</Navbar.Brand>
             </Navbar>
             <Stack gap={3}>
-
-
-                <CitySearchInput onFilterChange={onFilterChange}></CitySearchInput>
+                <CitySearchInput onFilterChange={onFilterChangeHandler}></CitySearchInput>
                 <ListOfCities data={citiesCollection}
                               onGetMoreRows={getMoreCities}
                               filter={filter}

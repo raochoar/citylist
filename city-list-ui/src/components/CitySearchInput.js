@@ -2,6 +2,13 @@ import {Form, Stack} from "react-bootstrap";
 import {useCallback, useState} from "react";
 import debounce from 'lodash.debounce';
 
+/**
+ * This is a simple search input component, that debounce the onchange event for 1 second
+ * in order to trigger list refresh events.
+ * @param onFilterChange
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function CitySearchInput( {onFilterChange = f => f}) {
     const [value, setValue] = useState('');
     // eslint-disable-next-line
