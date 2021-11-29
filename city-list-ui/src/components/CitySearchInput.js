@@ -4,6 +4,7 @@ import debounce from 'lodash.debounce';
 
 function CitySearchInput( {onFilterChange = f => f}) {
     const [value, setValue] = useState('');
+    // eslint-disable-next-line
     const debouncedFilterChange = useCallback(
         debounce(newValue => onFilterChange(newValue), 1000),
         []

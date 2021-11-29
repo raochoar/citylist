@@ -5,16 +5,17 @@ import CityItem from "./CityItem";
 import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {useInView} from 'react-intersection-observer';
 
-function ListOfCities({data = [], onGetMoreRows = f => f, filter = ''}) {
+function ListOfCities({data = [], onGetMoreRows = f => f, filter = '', noMoreDataFlag = false}) {
     const [maxHeight, setMaxHeight] = useState(0);
     const [lastRowRef, lastRowInView] = useInView();
     const listGroup = useRef();
 
     useEffect(() => {
-        if (lastRowInView) {
+        if (lastRowInView && !noMoreDataFlag) {
             onGetMoreRows(filter);
         }
-    }, [lastRowInView, filter]);
+        // eslint-disable-next-line
+    }, [lastRowInView, filter, noMoreDataFlag]);
 
     useLayoutEffect(() => {
         const offSet = listGroup.current.offsetTop;
@@ -32,7 +33,13 @@ function ListOfCities({data = [], onGetMoreRows = f => f, filter = ''}) {
         <ListGroup style={{maxHeight: maxHeight}} ref={listGroup}>
             {data.map((c, i) => <CityItem city={c} key={c.geonameid}/>)}
             <div ref={lastRowRef}>
-                <CityItem isPlaceHolder={true} key={'nextPagePlaceholder'}></CityItem>
+                {!noMoreDataFlag &&
+                    <>
+                    <CityItem isPlaceHolder={true} key={'nextPagePlaceholder1'}></CityItem>
+                    <CityItem isPlaceHolder={true} key={'nextPagePlaceholder2'}></CityItem>
+                    <CityItem isPlaceHolder={true} key={'nextPagePlaceholder3'}></CityItem>
+                    </>
+                }
             </div>
         </ListGroup>
     );

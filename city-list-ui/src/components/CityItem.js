@@ -5,8 +5,6 @@ import CityItemPlaceholder from "./CityItemPlaceholder";
 function CityItem({city, isPlaceHolder = false}) {
     const [checked, setChecked] = useState(false);
 
-    //48 height
-
     function cityClicked(cityId) {
         setChecked(!checked);
         console.log('action');

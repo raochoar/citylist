@@ -3,58 +3,73 @@ import {Container} from 'react-bootstrap';
 import {Stack} from 'react-bootstrap';
 import ListOfCities from "./components/ListOfCities";
 import CitySearchInput from "./components/CitySearchInput";
-import {useEffect, useState} from "react";
-
+import { useState} from "react";
 
 function App() {
     const [citiesCollection, setCitiesCollection] = useState([]);
-    const [error, setError] = useState();
-    const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(0);
     const [filter, setFilter] = useState('');
+    const [noMoreDataFlag, setNoMoreDataFlag] = useState(false);
+    const [controllerRef, setControllerRef] = useState();
 
     function fetchCityData(pageValue, filterValue) {
-        const offset=50*pageValue;
-        setLoading(true);
-        fetch('http://localhost:3030/cities?offset=' + offset + '&limit=50' + '&filter=' + filterValue)
+        if (controllerRef) {
+            controllerRef.abort();
+        }
+        const controller = new AbortController();
+        setControllerRef(controller);
+
+        const pageSize = 25;
+        const offset= pageSize * pageValue;
+        const url = new URL('http://localhost:3030/cities');
+        const params = {offset, limit:pageSize, filter: filterValue || ''};
+        url.search = new URLSearchParams(params).toString();
+        fetch(url.toString(), {signal: controller.signal})
             .then(result => {
-                    if (result.status == 200) {
+                    if (result.status === 200) {
                         result.json().then(r => {
-                            setLoading(false);
-                            setCitiesCollection(citiesCollection.concat(r.data));
-                            setPage(page + 1);
+                            if(r.data.length > 0) {
+                                setCitiesCollection(citiesCollection.concat(r.data));
+                                if(r.total > (offset + pageSize)) {
+                                    setPage(page + 1);
+                                } else {
+                                    setNoMoreDataFlag(true);
+                                }
+                            } else {
+                                setNoMoreDataFlag(true);
+                            }
                         })
                     } else {
                         console.log(' error found');
-                        setLoading(true);
                         getMoreCities();
-
                     }
                 },
                 e => {
                     console.log('running error promise');
-                    setError(e);
-                    setLoading(false);
                 });
     }
 
     const getMoreCities = (filterValue) => {
-        if (!loading) {
             fetchCityData(page, filterValue);
-        }
     };
     const onFilterChange = (newFilter) => {
+
             setFilter(newFilter);
             setPage(0);
             setCitiesCollection([]);
-            setLoading(false);
+            setNoMoreDataFlag(false);
+
     }
     return (
         <Container>
             <Stack gap={3}>
-                <h1>Welcome to the City travel wish list! we have {citiesCollection.length}!</h1>
+                <h1>Welcome to the City travel wish list!</h1>
                 <CitySearchInput onFilterChange={onFilterChange}></CitySearchInput>
-                <ListOfCities data={citiesCollection} onGetMoreRows={getMoreCities} filter={filter}></ListOfCities>
+                <ListOfCities data={citiesCollection}
+                              onGetMoreRows={getMoreCities}
+                              filter={filter}
+                              noMoreDataFlag={noMoreDataFlag}
+                />
             </Stack>
         </Container>
     );
