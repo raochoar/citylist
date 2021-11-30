@@ -17,7 +17,7 @@ export function useListOfCities() {
     const [noMoreDataFlag, setNoMoreDataFlag] = useState(false);
     const [controllerRef, setControllerRef] = useState();
 
-    const fetchCityData = function(pageValue, filterValue) {
+    const fetchCityData = function (pageValue, filterValue) {
         if (controllerRef) {
             controllerRef.abort();
         }
@@ -42,7 +42,7 @@ export function useListOfCities() {
                         })
                     } else {
                         console.log(' error found');
-                        getMoreCities(filterValue); //TODO: add a delay for the retry in order to avoid DOS attacks
+                        setTimeout(() => getMoreCities(filterValue), Configs.getRetryTime());
                     }
                 },
                 e => {

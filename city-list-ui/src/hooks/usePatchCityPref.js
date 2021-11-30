@@ -25,8 +25,7 @@ export function usePatchCityPref() {
                     setCheckedValue(newCheckedValue);
                     setIsLoading(false);
                 } else {
-                    console.log('Server error found');
-                    patchItemData(cityId, newCheckedValue); //re-try
+                    setTimeout(() => patchItemData(cityId, newCheckedValue), Configs.getRetryTime());
                 }
             },
             e => {

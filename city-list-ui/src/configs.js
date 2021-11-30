@@ -11,6 +11,10 @@ export default  class Configs {
     }
 
     static getPageSize = () => {
-        return 25;
+        return 25; //TODO: put a real value to be negotiated with backend stakeholders.
+    }
+
+    static getRetryTime = () => {
+        return 150; //TODO: put a real value to be negotiated with backend stakeholders.
     }
 }
