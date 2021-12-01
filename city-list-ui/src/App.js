@@ -16,10 +16,10 @@ function App() {
 
     return (
         <Container>
-            <Navbar bg="light">
-                <Navbar.Brand   variant="dark">Welcome to the City travel wish list!</Navbar.Brand>
-            </Navbar>
             <Stack gap={3}>
+                <Navbar bg="light">
+                    <Navbar.Brand   variant="dark">Welcome to the City travel wish list!</Navbar.Brand>
+                </Navbar>
                 <CitySearchInput onFilterChange={onFilterChangeHandler}></CitySearchInput>
                 <ListOfCities data={citiesCollection}
                               onGetMoreRows={getMoreCities}

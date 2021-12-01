@@ -9,7 +9,7 @@ import {useListOfCitiesPref} from "../hooks/useListOfCitiesPref";
 
 /**
  * This component render a list of cities and manage the infinite scroll logic.
- * Also provider the cities infomration logic to the city items.
+ * Also provider the cities information logic to the city items.
  * @param data
  * @param onGetMoreRows
  * @param filter

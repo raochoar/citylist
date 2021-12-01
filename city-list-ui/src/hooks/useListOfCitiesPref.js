@@ -29,8 +29,7 @@ export function useListOfCitiesPref() {
                             }
                         })
                     } else {
-                        console.log('Server error found');
-                        fetchListOfCitiesPref(page); //re-try
+                        setTimeout(() => fetchListOfCitiesPref(page), Configs.getRetryTime()); //re-try
                     }
                 },
                 e => {

@@ -41,7 +41,6 @@ export function useListOfCities() {
                             }
                         })
                     } else {
-                        console.log(' error found');
                         setTimeout(() => getMoreCities(filterValue), Configs.getRetryTime());
                     }
                 },

@@ -4,7 +4,7 @@ import {usePatchCityPref} from "../hooks/usePatchCityPref";
 
 /**
  * This component renders and handle the logic of a city item.
- * It calls a hook to patch the data preferences and recieve the
+ * It calls a hook to patch the data preferences and receive the
  * checkedItems to handle that state.
  * @param city
  * @param checkedItems
@@ -40,7 +40,7 @@ function CityItem({city, checkedItems = [], isCheckedItemLoading = false}) {
                         eventKey={city.geonameid}>
             <Stack direction={"horizontal"} gap={2}>
                 {isLoading ? <Spinner animation="grow" size="sm"/> :
-                    <Form.Check checked={checkedValue} onChange={() => null}/>
+                    <Form.Check data-testid="itemCheckBox" checked={checkedValue} onChange={() => null}/>
                 }
                 <Stack>
                     <div className="ms-2 ">
