@@ -17,7 +17,7 @@ In this repository you can find 2 applications (on each folder):
 
 # New UX alternative
 
-The current UX has a lot of click to manage the status of the selection, the user needs to scroll a lot to find a city (if the filter is not specific) and also after the user clicks on a city that state is lost in the scroll area.
+The current UX has a lot of clicks to manage the status of the selection, the user needs to scroll a lot to find a city (if the filter is not specific) and also after the user clicks on a city that state is lost in the scroll area.
 
 An alternative is to use autocomplete with pills:
 1) The user start to write the filter and the list is show as an autocomplete
