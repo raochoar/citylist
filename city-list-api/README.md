@@ -1,4 +1,4 @@
-#  Front End Challenge
+#  Front End API
 
 In these files, you'll find the API needed to work on the  Front End
 Challenge. You should have an email with the challenge details.
