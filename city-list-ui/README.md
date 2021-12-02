@@ -9,7 +9,7 @@ This app has some resilence feature to re-try the request if the server fails. Y
 
 Also, if the backend is not responding the app has a simple error handler that notify to the user the situation and reloads the app after a period of time.
 
-The last feature is debounced search; this allos to the input bar to wait 1 second in order to start to filter the list; making more responsive the user expirence.
+The last feature is debounced search; this allows to the input bar to wait 1 second in order to start to filter the list; making more responsive the user expirence.
 In adittion, the app has the intelligence to cancel the request if the user is fast enough to send 2 filter request at same time (corner case when you change the filter very  quickly and/or the backend service is very slow to respond).
 
 For the notification alerts there is a generic component on uiCore folder, that use a reducer and a content provider to render notification alerts from any other component that are inside the notification alert. 
