@@ -20,7 +20,7 @@ In this repository you can find 2 applications (on each folder):
 The current UX has a lot of clicks to manage the status of the selection, the user needs to scroll a lot to find a city (if the filter is not specific) and also after the user clicks on a city that state is lost in the scroll area.
 
 An alternative is to use autocomplete with pills:
-1) The user start to write the filter and the list is show as an autocomplete
+1) The user start to write the filter and the list is shown as an autocomplete
    ![Screenshot](new-ux-low-res-wireframes/step1.png)
 2) The user select the city and the autcomplete is collapsed, the selection is relfected in a item inside the input text box as a pill (see Miami Gardens sample).
    ![Screenshot](new-ux-low-res-wireframes/step2.png)
