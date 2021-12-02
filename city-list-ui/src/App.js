@@ -20,7 +20,7 @@ function App() {
         <Container>
             <Stack gap={3}>
                 <Navbar bg="light">
-                    <Navbar.Brand variant="dark">Welcome to the City travel wish list!</Navbar.Brand>
+                    <Navbar.Brand variant="dark">Select your favorite cities.</Navbar.Brand>
                 </Navbar>
                     <NotificationAlert/>
                     <CitySearchInput onFilterChange={onFilterChangeHandler}></CitySearchInput>
