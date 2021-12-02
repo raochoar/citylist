@@ -21,8 +21,11 @@ The current UX has a lot of click to manage the status of the selection, the use
 
 An alternative is to use autocomplete with pills:
 1) The user start to write the filter and the list is show as an autocomplete
+   ![Screenshot](new-ux-low-res-wireframes/step1.png)
 2) The user select the city and the autcomplete is collapsed, the selection is relfected in a item inside the input text box as a pill (see Miami Gardens sample).
+   ![Screenshot](new-ux-low-res-wireframes/step2.png)
 3) The user could remove the selected pill with a close icon or just the keyboard backspace key.
-4) Also could continue filtering and adding more cities if the user continue writing city names at the search bar.
+   ![Screenshot](new-ux-low-res-wireframes/step3.png)
+4) Finally, the user could continue filtering and adding more cities if the user continue writing city names at the search bar.
 
 
