@@ -14,3 +14,15 @@ In this repository you can find 2 applications (on each folder):
 3. Open another terminal and start the front end app:
 ### `npm start`
 4. Enjoy the app. It will be hosted in this endpoint: http://localhost:3030
+
+# New UX alternative
+
+The current UX has a lot of click to manage the status of the selection, the user needs to scroll a lot to find a city (if the filter is not specific) and also after the user clicks on a city that state is lost in the scroll area.
+
+An alternative is to use autocomplete with pills:
+1) The user start to write the filter and the list is show as an autocomplete
+2) The user select the city and the autcomplete is collapsed, the selection is relfected in a item inside the input text box as a pill (see Miami Gardens sample).
+3) The user could remove the selected pill with a close icon or just the keyboard backspace key.
+4) Also could continue filtering and adding more cities if the user continue writing city names at the search bar.
+
+
