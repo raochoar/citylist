@@ -7,12 +7,12 @@ Also allows to the user to select a city and send that state to a backend servic
 ## Non-functional features
 This app has some resilence feature to re-try the request if the server fails. You can see that configuration values in the configs.js class.
 
-Also if the backend is not responding the app has a simple error handle that notify the user the situation and reload the app after a period of time.
+Also, if the backend is not responding the app has a simple error handler that notify to the user the situation and reloads the app after a period of time.
 
-The last feature is debounced search in the input bar that wait 1 second in order to start to filter the list. 
-Also, the app has the intelligence to cancel request if the user is fast enough to send 2 filter request at same time (corner case when you change the filter very  quickly and/or the backend service is very slow to respond.
+The last feature is debounced search; this allows to the input bar to wait 1 second in order to start to filter the list; making more responsive the user expirence.
+In adittion, the app has the intelligence to cancel the request if the user is fast enough to send 2 filter request at same time (corner case when you change the filter very  quickly and/or the backend service is very slow to respond).
 
-For the notification alert there is a generic component on uiCore that use a reducer and a content provider to render notification alerts from any other component that are inside the notification alert.
+For the notification alerts there is a generic component on uiCore folder, that use a reducer and a content provider to render notification alerts from any other component that are inside the notification alert. 
 
 ## Software stack (dependencies)
 * react-bootstrap: library to manage layout and render responsive components.
