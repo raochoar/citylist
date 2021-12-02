@@ -1,6 +1,7 @@
 import React from "react";
 
 export default class Index {
+
     /**
      * This is my mock version of use state, it uses an array to store the
      * states calls and values. And also you may provided pre-defined states

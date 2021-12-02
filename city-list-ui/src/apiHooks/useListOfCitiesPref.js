@@ -1,5 +1,6 @@
 import {useState} from "react";
 import Configs from "../configs";
+import {useErrorNotificationHandling} from "../uiCore/useErrorNotificationHandling";
 
 /**
  * This hook is responsible to fetch the data of the cities prefer. It provides an array of
@@ -9,6 +10,7 @@ import Configs from "../configs";
 export function useListOfCitiesPref() {
     const [checkedItems, setCheckedItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const {handleConnectionIssue} = useErrorNotificationHandling();
 
     const fetchListOfCitiesPref = function(page, itemAcum = []) {
         const url = new URL(`${Configs.getBackendEndpoint()}/preferences/cities`);
@@ -33,7 +35,7 @@ export function useListOfCitiesPref() {
                     }
                 },
                 e => {
-                    console.log('Connection issue: ' + JSON.stringify(e));
+                    handleConnectionIssue();
                 });
     }
 

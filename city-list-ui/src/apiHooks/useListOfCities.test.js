@@ -2,6 +2,8 @@ import React from 'react';
 import Configs from "../configs";
 import {useListOfCities} from "./useListOfCities";
 import TestHelpers from "../testHelpers";
+import {useErrorNotificationHandling} from "../uiCore/useErrorNotificationHandling";
+
 
 jest.mock('react', () => {
     const ActualReact = jest.requireActual('react');
@@ -9,6 +11,17 @@ jest.mock('react', () => {
         ...ActualReact,
         useState: jest.fn(),
     };
+});
+
+jest.mock('../uiCore/useErrorNotificationHandling', () => {
+    const connectionIssuesMock = jest.fn();
+    return {
+        useErrorNotificationHandling: () => {
+            return {
+                handleConnectionIssue: connectionIssuesMock
+            };
+        }
+    }
 });
 
 describe('List of cities hook unit test', () => {
@@ -45,7 +58,7 @@ describe('List of cities hook unit test', () => {
 
         // Assert
         expect(fetch).toBeCalledTimes(1);
-        expect(console.log).toBeCalledTimes(1); //todo: replace this with business logic
+        expect(useErrorNotificationHandling().handleConnectionIssue).toBeCalledTimes(1);
 
         jest.useRealTimers();
     })

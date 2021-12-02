@@ -2,6 +2,7 @@ import React from 'react';
 import TestHelpers from "../testHelpers";
 import {useListOfCitiesPref} from "./useListOfCitiesPref";
 import Configs from "../configs";
+import {useErrorNotificationHandling} from "../uiCore/useErrorNotificationHandling";
 
 jest.mock('react', () => {
     const ActualReact = jest.requireActual('react');
@@ -9,6 +10,17 @@ jest.mock('react', () => {
         ...ActualReact,
         useState: jest.fn(),
     };
+});
+
+jest.mock('../uiCore/useErrorNotificationHandling', () => {
+    const connectionIssuesMock = jest.fn();
+    return {
+        useErrorNotificationHandling: () => {
+            return {
+                handleConnectionIssue: connectionIssuesMock
+            };
+        }
+    }
 });
 
 describe('Test suit of cities prefer API logic consumption',  () => {
@@ -29,7 +41,7 @@ describe('Test suit of cities prefer API logic consumption',  () => {
 
         //Assert
         expect(fetch).toBeCalledTimes(1);
-        expect(console.log).toBeCalledTimes(1); //todo: replace this with business logic
+        expect(useErrorNotificationHandling().handleConnectionIssue).toBeCalledTimes(1);
 
         jest.useRealTimers();
     })

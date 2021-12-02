@@ -3,7 +3,9 @@ import {Container, Navbar} from 'react-bootstrap';
 import {Stack} from 'react-bootstrap';
 import ListOfCities from "./components/ListOfCities";
 import CitySearchInput from "./components/CitySearchInput";
-import {useListOfCities} from "./hooks/useListOfCities";
+import {useListOfCities} from "./apiHooks/useListOfCities";
+import NotificationAlert from "./uiCore/NotificationAlert";
+
 
 /**
  * This is the main app, contains the header, filter input and a list of cities.
@@ -12,20 +14,21 @@ import {useListOfCities} from "./hooks/useListOfCities";
  * @constructor
  */
 function App() {
-    const { citiesCollection, getMoreCities, filter, noMoreDataFlag, onFilterChangeHandler } = useListOfCities();
+    const {citiesCollection, getMoreCities, filter, noMoreDataFlag, onFilterChangeHandler} = useListOfCities();
 
     return (
         <Container>
             <Stack gap={3}>
                 <Navbar bg="light">
-                    <Navbar.Brand   variant="dark">Welcome to the City travel wish list!</Navbar.Brand>
+                    <Navbar.Brand variant="dark">Welcome to the City travel wish list!</Navbar.Brand>
                 </Navbar>
-                <CitySearchInput onFilterChange={onFilterChangeHandler}></CitySearchInput>
-                <ListOfCities data={citiesCollection}
-                              onGetMoreRows={getMoreCities}
-                              filter={filter}
-                              noMoreDataFlag={noMoreDataFlag}
-                />
+                    <NotificationAlert/>
+                    <CitySearchInput onFilterChange={onFilterChangeHandler}></CitySearchInput>
+                    <ListOfCities data={citiesCollection}
+                                  onGetMoreRows={getMoreCities}
+                                  filter={filter}
+                                  noMoreDataFlag={noMoreDataFlag}
+                    />
             </Stack>
         </Container>
     );

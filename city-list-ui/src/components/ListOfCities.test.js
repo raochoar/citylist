@@ -1,6 +1,6 @@
 import React from 'react';
-import * as usePatchCityPrefModule from "../hooks/usePatchCityPref";
-import * as useListOfCitiesPrefModule from "../hooks/useListOfCitiesPref";
+import * as usePatchCityPrefModule from "../apiHooks/usePatchCityPref";
+import * as useListOfCitiesPrefModule from "../apiHooks/useListOfCitiesPref";
 import ListOfCities from "./ListOfCities";
 import {render} from "@testing-library/react";
 

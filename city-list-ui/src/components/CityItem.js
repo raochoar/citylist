@@ -1,6 +1,6 @@
 import {Form, ListGroup, Spinner, Stack} from "react-bootstrap";
 import {useEffect} from "react";
-import {usePatchCityPref} from "../hooks/usePatchCityPref";
+import {usePatchCityPref} from "../apiHooks/usePatchCityPref";
 
 /**
  * This component renders and handle the logic of a city item.

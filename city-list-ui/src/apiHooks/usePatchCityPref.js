@@ -1,5 +1,6 @@
 import {useState} from "react";
 import Configs from "../configs";
+import {useErrorNotificationHandling} from "../uiCore/useErrorNotificationHandling";
 
 /**
  * This hook is responsible of change the state of a city selection,
@@ -9,6 +10,7 @@ import Configs from "../configs";
 export function usePatchCityPref() {
     const [checkedValue, setCheckedValue] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const {handleConnectionIssue} = useErrorNotificationHandling();
 
     const patchItemData = function(cityId, newCheckedValue) {
         const body = {};
@@ -29,7 +31,7 @@ export function usePatchCityPref() {
                 }
             },
             e => {
-                console.log('Connection issue: ' + JSON.stringify(e));
+                handleConnectionIssue();
             });
     }
 

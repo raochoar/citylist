@@ -17,4 +17,8 @@ export default  class Configs {
     static getRetryTime = () => {
         return 150; //TODO: put a real value to be negotiated with backend stakeholders.
     }
+
+    static getReloadPageTimer() {
+        return 5000;
+    }
 }

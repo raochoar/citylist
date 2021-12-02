@@ -5,7 +5,7 @@ import CityItem from "./CityItem";
 import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {useInView} from 'react-intersection-observer';
 import CityItemPlaceholder from "./CityItemPlaceholder";
-import {useListOfCitiesPref} from "../hooks/useListOfCitiesPref";
+import {useListOfCitiesPref} from "../apiHooks/useListOfCitiesPref";
 
 /**
  * This component render a list of cities and manage the infinite scroll logic.

@@ -1,5 +1,7 @@
 import {useState} from "react";
 import Configs from "../configs";
+import {useErrorNotificationHandling} from "../uiCore/useErrorNotificationHandling";
+
 
 
 /**
@@ -16,6 +18,7 @@ export function useListOfCities() {
     const [filter, setFilter] = useState('');
     const [noMoreDataFlag, setNoMoreDataFlag] = useState(false);
     const [controllerRef, setControllerRef] = useState();
+    const {handleConnectionIssue} = useErrorNotificationHandling();
 
     const fetchCityData = function (pageValue, filterValue) {
         if (controllerRef) {
@@ -45,7 +48,7 @@ export function useListOfCities() {
                     }
                 },
                 e => {
-                    console.log('running error promise');
+                    handleConnectionIssue();
                 });
     }
 

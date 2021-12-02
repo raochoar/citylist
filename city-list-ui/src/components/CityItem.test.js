@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from "@testing-library/react";
 import CityItem from "./CityItem";
-import * as customHook from '../hooks/usePatchCityPref';
+import * as customHook from '../apiHooks/usePatchCityPref';
 import userEvent from "@testing-library/user-event";
 
 jest.mock('react', () => {
