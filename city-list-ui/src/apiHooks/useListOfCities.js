@@ -48,7 +48,9 @@ export function useListOfCities() {
                     }
                 },
                 e => {
-                    handleConnectionIssue();
+                    if(e?.code !== e.ABORT_ERR) {
+                        handleConnectionIssue();
+                    }
                 });
     }
 

@@ -48,7 +48,7 @@ describe('List of cities hook unit test', () => {
         jest.spyOn(global, 'setTimeout');
         jest.spyOn(console, 'log').mockImplementation(f => f); //keep clean the log :)
         const {flushPromises} = prepareMocks();
-        fetch = jest.fn(() => Promise.reject('no reason'));
+        fetch = jest.fn(() => Promise.reject({code: DOMException.ABORT_ERR}));
         const {getMoreCities} = useListOfCities();
 
 
